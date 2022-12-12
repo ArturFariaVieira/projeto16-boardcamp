@@ -7,4 +7,5 @@ import categoriasRouter from "./categoriasRouter.js";
 const router = Router();
 router.use(categoriasRouter)
 router.use(jogosRouter);
+router.use(clientesRouter);
 export default router;
