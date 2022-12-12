@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const { Pool } = pkg;
-export default connection = new Pool({
+const connection = new Pool({
     connectionString: process.env.DATABASE_URL,
+    
   });
- 
+export default connection;

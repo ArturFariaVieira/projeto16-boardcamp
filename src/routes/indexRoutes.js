@@ -1,8 +1,9 @@
 import { Router } from "express";
-import authRouter from "./authRouter.js";
-import balanceRouter from "./balanceRouter.js";
+import alugueisRouter from "./alugueisRouter.js";
+import jogosRouter from "./jogosRouter.js";
+import clientesRouter from "./clientesRouter.js";
+import categoriasRouter from "./categoriasRouter.js";
 
 const router = Router();
-router.use(authRouter);
-router.use(balanceRouter);
+router.use(categoriasRouter);
 export default router;
