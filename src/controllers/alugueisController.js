@@ -5,6 +5,7 @@ export async function getRentals (req, res) {
     const {customerId, gameId} = req.query;
     try {
         if(customerId){
+            console.log("oi")
             const rentals = await connection.query(`SELECT * FROM rentals WHERE "customerId" = $1;`, [customerId]);
             res.send(rentals.rows);
         }
@@ -36,16 +37,11 @@ export async function getRentals (req, res) {
 
 export async function postRental (req, res) {
     const {customerId, gameId, daysRented} = req.body;
-    const rentDate = dayjs().format('YYYY-MM-DD');
-    
-
-
-    
+    const rentDate = dayjs().format('YYYY-MM-DD');  
     try{
         const game = await connection.query(`SELECT * FROM games WHERE id = $1;`, [gameId]);
         const user = await connection.query(`SELECT (id, name) FROM customers WHERE id = $1;`, [customerId]);
         const originalPrice = Number(daysRented)* game.rows[0].pricePerDay;
-
         const post = await connection.query
         (
             `INSERT INTO 
@@ -95,7 +91,7 @@ export async function returnRental(req, res ) {
     try{
         const returnrental = await connection.query(`SELECT * FROM rentals WHERE id = $1;`, [id]);
         const hoje = Date.now();
-        const today = dayjs().format('YYYY-MM-DD');
+        const today = dayjs();
         const returnday = (returnrental.rows[0].rentDate.getTime()) + (returnrental.rows[0].daysRented *86400000)
         const atraso = Math.ceil((hoje - returnday) / 86400000)
         const taxa = atraso * (returnrental.rows[0].originalPrice / returnrental.rows[0].daysRented);

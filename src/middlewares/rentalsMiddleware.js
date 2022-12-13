@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 export async function newrentalValidationMiddleware(req, res, next) {
     const {customerId, gameId, daysRented} = req.body;
+    console.log(customerId);
 
     try{
         const userexists = await connection.query(`Select * FROM customers WHERE id = $1`, [customerId])
@@ -18,10 +19,10 @@ export async function newrentalValidationMiddleware(req, res, next) {
         if (!validation) {
             return res.sendStatus(400);
         }
+        const nulo = null;
         const gameamount = await connection.query(`Select games."stockTotal" from games WHERE id = $1`, [gameId])
-        const gamerented = await connection.query(`Select rentals. FROM rentals WHERE 'returnDate' = 'null' ;`)
-        console.log(gameamount.rows[0].stockTotal)
-        console.log(gamerented)
+        const gamerented = await connection.query(`Select rentals. FROM rentals WHERE "returnDate" = $1 ;`, [nulo])
+        
         if(gamerented.rows.length >= gameamount.rows[0].stockTotal){
             return res.sendStatus(400)
         }
